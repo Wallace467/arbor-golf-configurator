@@ -759,7 +759,7 @@
 
   /* NOTE PREVIEW */
   #notePreview { width: 100%; display: flex; align-items: center; justify-content: center; }
-  #notePreview .zoomable-preview svg { width: min(96%, 500px); height: auto; filter: drop-shadow(0 4px 18px rgba(0,0,0,0.18)); }
+  #notePreview .preview-frame svg { width: min(88%, 420px); height: auto; filter: drop-shadow(0 4px 18px rgba(0,0,0,0.18)); }
 
   .toast {
     position: fixed; bottom: 2rem; left: 50%;
@@ -1064,6 +1064,23 @@
   }
   .included-preview.included-preview-bagtag {
     min-height: 148px;
+  }
+  .included-preview .preview-frame {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 2.3rem;
+  }
+  .included-preview .zoomable-preview::after {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    bottom: 0.3rem;
+    white-space: nowrap;
+    min-width: 128px;
+    text-align: center;
   }
   .included-preview.included-preview-bagtag svg { max-height: 132px; }
   .included-preview.included-preview-note svg {
@@ -1479,7 +1496,7 @@
 
   <!-- ============ THANK YOU NOTE ============ -->
   <section class="product-section" data-section="note">
-    <div class="preview-pane" style="min-height:680px;">
+    <div class="preview-pane" style="min-height:600px;">
       <div class="preview-label" id="notePreviewLabel">THANK YOU NOTE</div>
       <div id="notePreview"></div>
     </div>
