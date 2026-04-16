@@ -153,6 +153,10 @@
     justify-content: center;
   }
   #bagTagPreview svg { width: min(92%, 520px); }
+  #bagTagPreview[data-bagtag-view="back"] svg,
+  #bagTagPreview[data-bagtag-view="sling"] svg {
+    filter: drop-shadow(0 12px 28px rgba(0,0,0,0.22));
+  }
   #pouchPreview svg { width: min(88%, 500px); }
   #stickerPreview svg { width: min(84%, 500px); }
 
@@ -264,8 +268,100 @@
   }
 
   /* SUMMARY */
+  .summary-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.9fr);
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .proposal-overview {
+    display: grid;
+    gap: 1rem;
+  }
+  .proposal-card {
+    background: var(--c-white);
+    border: 1px solid var(--c-border);
+    border-radius: 6px;
+    padding: 1.25rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  }
+  .proposal-card.proposal-lead {
+    border-top: 4px solid var(--c-wine);
+  }
+  .proposal-kicker {
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    color: var(--c-wine);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+  .proposal-card h3 {
+    font-style: italic;
+    font-weight: normal;
+    color: var(--c-navy);
+    font-size: 1.45rem;
+    margin-bottom: 0.6rem;
+  }
+  .proposal-card p {
+    color: var(--c-ink);
+    font-size: 0.95rem;
+    margin-bottom: 0.9rem;
+  }
+  .proposal-pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+  .proposal-pill {
+    display: inline-flex;
+    align-items: center;
+    background: #f7f1df;
+    border: 1px solid var(--c-border);
+    border-radius: 999px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
+    color: var(--c-ink);
+  }
+  .proposal-steps {
+    display: grid;
+    gap: 0.7rem;
+  }
+  .proposal-step {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 0.8rem;
+    align-items: start;
+  }
+  .proposal-step-num {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--c-navy);
+    color: var(--c-cream);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: bold;
+  }
+  .proposal-step-copy strong {
+    display: block;
+    color: var(--c-navy);
+    font-size: 0.92rem;
+    margin-bottom: 0.15rem;
+  }
+  .proposal-step-copy span {
+    display: block;
+    color: var(--c-muted);
+    font-size: 0.84rem;
+    line-height: 1.45;
+  }
   .summary-grid {
-    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
     margin-bottom: 1.5rem;
   }
   .summary-card {
@@ -312,6 +408,20 @@
     font-size: 1.4rem; margin-bottom: 0.5rem; font-weight: normal;
   }
   .summary-actions p { margin-bottom: 1rem; opacity: 0.9; font-size: 0.95rem; }
+  .summary-actions .action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 0.95rem;
+  }
+  .summary-actions .action-buttons .btn { margin: 0; }
+  .summary-actions .action-note {
+    max-width: 760px;
+    margin: 0 auto;
+    font-size: 0.8rem;
+    color: rgba(245,241,232,0.74);
+  }
   .summary-note {
     margin-bottom: 1rem;
     color: var(--c-muted);
@@ -357,14 +467,6 @@
   }
   .save-option-bar .btn { width: 100%; margin: 0; }
 
-  .compare-toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    align-items: center;
-    margin-bottom: 1.25rem;
-  }
-  .compare-toolbar .btn { margin: 0; }
   .compare-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -627,28 +729,80 @@
   .kit-flatlay-section.active { display:grid; }
   .kit-scene {
     background: linear-gradient(145deg,#e6dfd1 0%,#d8d0c0 100%);
-    border-radius:10px; padding:2.5rem 2rem;
-    display:flex; flex-wrap:wrap;
-    justify-content:center; align-items:center; gap:2.5rem;
-    min-height:500px;
+    border-radius:10px;
+    padding:1.5rem;
+    display:grid;
+    grid-template-columns:minmax(340px,1.25fr) minmax(280px,0.95fr);
+    gap:1.5rem;
+    min-height:540px;
     box-shadow: inset 0 2px 8px rgba(0,0,0,0.08);
   }
-  .kit-item {
-    display:flex; flex-direction:column; align-items:center;
-    filter:drop-shadow(0 10px 28px rgba(0,0,0,0.22));
+  .kit-bag-board,
+  .kit-accessory-card {
+    background: rgba(255,255,255,0.42);
+    border: 1px solid rgba(61,43,26,0.12);
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  }
+  .kit-bag-board {
+    display: flex;
+    flex-direction: column;
+  }
+  .kit-bag-board-kicker {
+    font-size: 0.66rem;
+    letter-spacing: 0.28em;
+    color: rgba(44,36,24,0.48);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .kit-bag-title {
+    color: var(--c-navy);
+    font-style: italic;
+    font-size: 1.45rem;
+    margin-bottom: 0.35rem;
+  }
+  .kit-bag-copy {
+    color: var(--c-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  .kit-golf-bag {
+    flex: 1;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .kit-hanging-tag {
+    width: min(100%, 240px);
+  }
+  .kit-hanging-tag svg {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 12px 28px rgba(0,0,0,0.22));
+  }
+  .kit-accessory-stack {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+  .kit-accessory-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   .kit-item-label {
     font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase;
     color:rgba(44,36,24,0.45); margin-bottom:0.5rem; font-style:italic;
   }
-  .kit-item-pouch   { transform:rotate(-3deg); }
-  .kit-item-tag     { transform:rotate(5deg);  }
-  .kit-item-sticker { transform:rotate(-4deg); }
-  .kit-item-note    { transform:rotate(2.5deg);}
-  .kit-item-pouch svg   { width:min(90%,185px); }
-  .kit-item-tag svg     { width:min(90%,150px); }
-  .kit-item-sticker svg { width:min(90%,130px); }
-  .kit-item-note svg    { width:min(90%,140px); }
+  .kit-accessory-card svg {
+    width: min(100%, 190px);
+    height: auto;
+    filter: drop-shadow(0 10px 24px rgba(0,0,0,0.18));
+  }
+  .kit-accessory-card.is-note svg { width: min(100%, 165px); }
 
   .kit-caption {
     text-align:center; padding:1.5rem 2rem 0.5rem;
@@ -684,7 +838,29 @@
     background:var(--c-white); border:1px solid var(--c-border);
     border-radius:6px; padding:0.9rem 0.75rem; text-align:center;
   }
-  .included-icon { font-size:1.75rem; margin-bottom:0.4rem; }
+  .included-preview {
+    min-height: 138px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #faf6e9;
+    border-radius: 6px;
+    padding: 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+  .included-preview svg {
+    max-width: 100%;
+    max-height: 118px;
+    width: auto;
+    height: auto;
+  }
+  .included-preview.included-preview-bagtag {
+    min-height: 148px;
+  }
+  .included-preview.included-preview-bagtag svg { max-height: 132px; }
+  .included-preview.included-preview-note svg {
+    max-height: 130px;
+  }
   .included-card h4 { font-style:italic; font-weight:normal; color:var(--c-navy);
     font-size:1rem; margin-bottom:0.3rem; }
   .included-card p { font-size:0.8rem; color:var(--c-muted); }
@@ -704,18 +880,29 @@
   }
 
   @media print {
-    nav.tabs, .controls-pane, .summary-actions { display: none !important; }
-    .product-section { display: grid !important; }
+    nav.tabs, .controls-pane, .summary-actions, .toast { display: none !important; }
+    main > section { display: none !important; }
+    main > section[data-section="summary"] { display: block !important; }
     body { background: white; }
+    main { max-width: none; padding: 0; }
+    .proposal-card,
+    .summary-card {
+      box-shadow: none;
+    }
   }
 
   @media (max-width: 900px) {
     .product-section.active { grid-template-columns: 1fr; }
+    .summary-top,
     .summary-grid { grid-template-columns: 1fr; }
     .compare-grid, .compare-previews { grid-template-columns: 1fr; }
     .intro-grid { grid-template-columns: 1fr; }
     main { padding: 1rem; }
     .preview-pane { min-height: 460px; padding: 1.25rem; }
+    .kit-scene { grid-template-columns: 1fr; }
+    .kit-golf-bag { min-height: 340px; }
+    .kit-hanging-tag { width: min(100%, 205px); }
+    .summary-actions .action-buttons { flex-direction: column; }
     #bagTagPreview svg { width: min(92%, 420px); }
     #pouchPreview svg { width: min(90%, 400px); }
     #stickerPreview svg { width: min(88%, 380px); }
@@ -774,22 +961,22 @@
         </div>
         <div class="included-grid">
           <div class="included-card">
-            <div class="included-icon">🏷</div>
+            <div class="included-preview included-preview-bagtag" id="includedBagTagPreview"></div>
             <h4>Bag Tag</h4>
             <p>Club crest on the front, personalised text on the back. Attaches to any golf bag. The piece visitors take home.</p>
           </div>
           <div class="included-card">
-            <div class="included-icon">👜</div>
+            <div class="included-preview" id="includedPouchPreview"></div>
             <h4>Valuables Pouch</h4>
             <p>A soft drawstring pouch for keys, cards, and small valuables on the round. Branded with the club crest.</p>
           </div>
           <div class="included-card">
-            <div class="included-icon">⬤</div>
+            <div class="included-preview" id="includedStickerPreview"></div>
             <h4>Sticker</h4>
             <p>Club crest sticker in your chosen shape and colour. Works on bags, scorecards, water bottles — wherever it fits.</p>
           </div>
           <div class="included-card">
-            <div class="included-icon">✉</div>
+            <div class="included-preview included-preview-note" id="includedNotePreview"></div>
             <h4>Thank You Note</h4>
             <p>A personalised A5 card to welcome visitors and sign off from the club. Sets the tone for the whole experience.</p>
           </div>
@@ -817,8 +1004,8 @@
           </div>
           <div class="intro-card">
             <div class="intro-card-step">STEP 4</div>
-            <h3>Send to Arbor Golf</h3>
-            <p>Go to the Summary tab and hit "Send to Arbor Golf" — your selections come straight to us.</p>
+            <h3>Share with Arbor Golf</h3>
+            <p>Go to the Summary tab to open a pre-filled email draft, save a shareable PDF, or export the live configuration.</p>
           </div>
         </div>
       </div>
@@ -1126,14 +1313,18 @@
           </div>
         </div>
       </div>
+
+      <div class="save-option-bar">
+        <button type="button" class="btn btn-outline" onclick="saveProductOption('note')">SAVE NOTE OPTION TO COMPARE</button>
+        <p class="help">Store this version so you can compare and choose it later.</p>
+      </div>
     </div>
   </section>
 
   <!-- ============ COMPARE ============ -->
   <section class="product-section" data-section="compare" style="grid-template-columns: 1fr;">
     <div>
-      <p class="summary-note">Compare saved options product by product. Choose the Bag Tag, Pouch and Sticker options you want to appear in the final summary.</p>
-      <input type="file" id="configImportFile" accept=".json,application/json" style="display:none" />
+      <p class="summary-note">Compare saved options product by product. Choose the Bag Tag, Pouch, Sticker and Thank You Note options you want to appear in the final proposal.</p>
       <div id="compareGrid"></div>
     </div>
   </section>
@@ -1141,15 +1332,18 @@
   <!-- ============ SUMMARY ============ -->
   <section class="product-section" data-section="summary" style="grid-template-columns: 1fr;">
     <div>
-      <p class="summary-note">Summary reflects the products chosen in Compare. Anything not chosen there uses the current working version.</p>
-      <div class="summary-grid" id="summaryGrid"></div>
-      <div class="summary-actions">
-        <h3>Happy with your selections?</h3>
-        <p>Hit the button below to send your choices directly to us, or save as a PDF to share with colleagues first.</p>
-        <button class="btn" style="font-size:1rem;padding:0.8rem 1.8rem;" onclick="sendSelectionsEmail()">SEND TO ARBOR GOLF</button>
-        <button class="btn btn-secondary" onclick="window.print()">SAVE AS PDF</button>
-        <button class="btn btn-secondary" onclick="copySummary()">COPY AS TEXT</button>
+      <p class="summary-note">This is the share-ready proposal view. It reflects the options chosen in Compare; anything not chosen there uses the current working version.</p>
+      <div class="summary-actions" style="margin-bottom:1.5rem;">
+        <h3>Ready to share?</h3>
+        <p>Open a pre-filled email draft to Arbor Golf or save this proposal as a PDF for internal review before you send it on.</p>
+        <div class="action-buttons">
+          <button class="btn" style="font-size:1rem;padding:0.8rem 1.8rem;" onclick="sendSelectionsEmail()">OPEN EMAIL DRAFT</button>
+          <button class="btn btn-secondary" onclick="printProposal()">SAVE PROPOSAL PDF</button>
+          <button class="btn btn-secondary" onclick="copySummary()">COPY SUMMARY</button>
+        </div>
+        <div class="action-note">The email button opens your own mail app with the proposal summary filled in. Attach the PDF if you want Hunstanton or Arbor Golf to review the exact proposal view.</div>
       </div>
+      <div class="summary-grid" id="summaryGrid"></div>
 
       <!-- Arbor Advantage -->
       <div style="background:var(--c-white);border:1px solid var(--c-border);border-radius:6px;padding:1.5rem 2rem;margin-top:1.25rem;box-shadow:0 4px 12px rgba(0,0,0,0.06);">
@@ -1239,11 +1433,10 @@
   ];
   const LABEL_PALETTE = ['cream','stone','tan','navy','wine','red','green','black','white'];
 
-  const CONFIG_EXPORT_VERSION = '1';
-  const PRODUCT_LABELS = { bagTag: 'Bag Tag', pouch: 'Pouch', sticker: 'Sticker' };
+  const PRODUCT_LABELS = { bagTag: 'Bag Tag', pouch: 'Valuables Pouch', sticker: 'Sticker', note: 'Thank You Note' };
   const SLING_PRESETS = ["Est' 1891", "1891", "HGC", "Visitor", "Visitor 2026"];
   const BAG_TAG_BACK_TEXT_PRESETS = {
-    '1891': '1891', 'est1891': 'Est. 1891', 'visitor': 'VISITOR', 'visitor2026': 'VISITOR2026', 'custom': ''
+    '1891': '1891', 'est1891': 'Est. 1891', 'visitor': 'VISITOR', 'visitor2026': 'VISITOR 2026', 'custom': ''
   };
 
   // ============================================================
@@ -1264,6 +1457,7 @@
       bagTag:  { front: { body: 'green',  trim: 'gold'  }, back: { text: 'gold',  textOption: '1891',    text_content: '1891',      fontSize: 22 }, sling: { text_content: "Est' 1891" } },
       pouch:   { body: 'cream', cord: 'green', labelText: 'ARBOR', labelColor: 'green', front: { print: 'crest', textColor: 'green',  customText: '' }, back: { print: 'none', textColor: 'green',  customText: '' } },
       sticker: { body: 'cream', border: 'green', shape: 'circle', logoX: 50, logoY: 50, logoScale: 100, rectText: { content: '', color: 'black',  fontSize: 36, x: 50, y: 82 } },
+      note:    { heading: 'Welcome to Hunstanton', message: 'We hope you enjoy your round today. The links here are among the finest on the Norfolk coast — we hope they treat you well.\n\nPlease do let us know if there is anything we can do to make your visit extra special.', signatory: 'The team at Hunstanton Golf Club', border: 'green', showLogo: true, logoPosition: 'top' },
     },
     navy: {
       name: 'Navy & Gold',
@@ -1271,6 +1465,7 @@
       bagTag:  { front: { body: 'navy',   trim: 'gold'  }, back: { text: 'gold',  textOption: 'est1891', text_content: 'Est. 1891',  fontSize: 22 }, sling: { text_content: 'HGC'       } },
       pouch:   { body: 'navy',  cord: 'gold',  labelText: 'ARBOR', labelColor: 'gold',  front: { print: 'crest', textColor: 'gold',   customText: '' }, back: { print: 'none', textColor: 'gold',   customText: '' } },
       sticker: { body: 'navy',  border: 'gold',  shape: 'circle', logoX: 50, logoY: 50, logoScale: 100, rectText: { content: '', color: 'gold',   fontSize: 36, x: 50, y: 82 } },
+      note:    { heading: 'Welcome to Hunstanton', message: 'We hope you enjoy your round today. The links here are among the finest on the Norfolk coast — we hope they treat you well.\n\nPlease do let us know if there is anything we can do to make your visit extra special.', signatory: 'The team at Hunstanton Golf Club', border: 'gold', showLogo: true, logoPosition: 'top' },
     },
     heritage: {
       name: 'Cream & Wine',
@@ -1278,6 +1473,7 @@
       bagTag:  { front: { body: 'cream',  trim: 'wine'  }, back: { text: 'wine',  textOption: '1891',    text_content: '1891',      fontSize: 22 }, sling: { text_content: 'Visitor'   } },
       pouch:   { body: 'cream', cord: 'wine',  labelText: 'ARBOR', labelColor: 'wine',  front: { print: 'crest', textColor: 'wine',   customText: '' }, back: { print: 'none', textColor: 'wine',   customText: '' } },
       sticker: { body: 'cream', border: 'wine',  shape: 'circle', logoX: 50, logoY: 50, logoScale: 100, rectText: { content: '', color: 'wine',   fontSize: 36, x: 50, y: 82 } },
+      note:    { heading: 'Welcome to Hunstanton', message: 'We hope you enjoy your round today. The links here are among the finest on the Norfolk coast — we hope they treat you well.\n\nPlease do let us know if there is anything we can do to make your visit extra special.', signatory: 'The team at Hunstanton Golf Club', border: 'wine', showLogo: true, logoPosition: 'top' },
     },
   };
 
@@ -1304,13 +1500,13 @@
       message: 'We hope you enjoy your round today. The links here are among the finest on the Norfolk coast — we hope they treat you well.\n\nPlease do let us know if there is anything we can do to make your visit extra special.',
       signatory: 'The team at Hunstanton Golf Club',
       border: 'green',
-      showLogo: false,
+      showLogo: true,
       logoPosition: 'top'
     },
     bagTagSubtab: 'front',
     pouchSide: 'front',
-    savedProductOptions: { bagTag: [], pouch: [], sticker: [] },
-    chosenSummary: { bagTag: null, pouch: null, sticker: null }
+    savedProductOptions: { bagTag: [], pouch: [], sticker: [], note: [] },
+    chosenSummary: { bagTag: null, pouch: null, sticker: null, note: null }
   };
 
   // ============================================================
@@ -1332,35 +1528,32 @@
   //   Delete (or comment out) its push() call below.
   // ============================================================
   function initArborPicks() {
-    if (state.savedProductOptions.bagTag.length) return; // skip on import
+    const hasArborPicks = productKey => state.savedProductOptions[productKey].some(option => option && option.arborPick);
+    const addArborPicks = (productKey, picks) => {
+      if (hasArborPicks(productKey)) return;
+      state.savedProductOptions[productKey].push(...picks);
+    };
 
-    // ── BAG TAG ──────────────────────────────────────────────
-    state.savedProductOptions.bagTag.push(
-      { id:'rec_bt_classic',   name:'Classic Hunstanton', arborPick:true,
-        config: clone(ARBOR_LOOKS.classic.bagTag) },
-      { id:'rec_bt_navy',      name:'Navy & Gold',        arborPick:true,
-        config: clone(ARBOR_LOOKS.navy.bagTag) },
-      { id:'rec_bt_heritage',  name:'Cream & Wine',       arborPick:true,
-        config: clone(ARBOR_LOOKS.heritage.bagTag) }
-    );
-    // ── POUCH ────────────────────────────────────────────────
-    state.savedProductOptions.pouch.push(
-      { id:'rec_po_classic',   name:'Classic Hunstanton', arborPick:true,
-        config: clone(ARBOR_LOOKS.classic.pouch) },
-      { id:'rec_po_navy',      name:'Navy & Gold',        arborPick:true,
-        config: clone(ARBOR_LOOKS.navy.pouch) },
-      { id:'rec_po_heritage',  name:'Cream & Wine',       arborPick:true,
-        config: clone(ARBOR_LOOKS.heritage.pouch) }
-    );
-    // ── STICKER ──────────────────────────────────────────────
-    state.savedProductOptions.sticker.push(
-      { id:'rec_st_classic',   name:'Classic Hunstanton', arborPick:true,
-        config: clone(ARBOR_LOOKS.classic.sticker) },
-      { id:'rec_st_navy',      name:'Navy & Gold',        arborPick:true,
-        config: clone(ARBOR_LOOKS.navy.sticker) },
-      { id:'rec_st_heritage',  name:'Cream & Wine',       arborPick:true,
-        config: clone(ARBOR_LOOKS.heritage.sticker) }
-    );
+    addArborPicks('bagTag', [
+      { id:'rec_bt_classic',   name:'Classic Hunstanton', arborPick:true, config: clone(ARBOR_LOOKS.classic.bagTag) },
+      { id:'rec_bt_navy',      name:'Navy & Gold',        arborPick:true, config: clone(ARBOR_LOOKS.navy.bagTag) },
+      { id:'rec_bt_heritage',  name:'Cream & Wine',       arborPick:true, config: clone(ARBOR_LOOKS.heritage.bagTag) }
+    ]);
+    addArborPicks('pouch', [
+      { id:'rec_po_classic',   name:'Classic Hunstanton', arborPick:true, config: clone(ARBOR_LOOKS.classic.pouch) },
+      { id:'rec_po_navy',      name:'Navy & Gold',        arborPick:true, config: clone(ARBOR_LOOKS.navy.pouch) },
+      { id:'rec_po_heritage',  name:'Cream & Wine',       arborPick:true, config: clone(ARBOR_LOOKS.heritage.pouch) }
+    ]);
+    addArborPicks('sticker', [
+      { id:'rec_st_classic',   name:'Classic Hunstanton', arborPick:true, config: clone(ARBOR_LOOKS.classic.sticker) },
+      { id:'rec_st_navy',      name:'Navy & Gold',        arborPick:true, config: clone(ARBOR_LOOKS.navy.sticker) },
+      { id:'rec_st_heritage',  name:'Cream & Wine',       arborPick:true, config: clone(ARBOR_LOOKS.heritage.sticker) }
+    ]);
+    addArborPicks('note', [
+      { id:'rec_nt_classic',   name:'Classic Hunstanton', arborPick:true, config: clone(ARBOR_LOOKS.classic.note) },
+      { id:'rec_nt_navy',      name:'Navy & Gold',        arborPick:true, config: clone(ARBOR_LOOKS.navy.note) },
+      { id:'rec_nt_heritage',  name:'Cream & Wine',       arborPick:true, config: clone(ARBOR_LOOKS.heritage.note) }
+    ]);
   }
 
   // ============ HELPERS ============
@@ -1380,7 +1573,8 @@
     return clone({
       bagTag: state.bagTag,
       pouch: state.pouch,
-      sticker: state.sticker
+      sticker: state.sticker,
+      note: state.note
     });
   }
   function getCurrentProductConfig(productKey) {
@@ -1394,14 +1588,17 @@
     const bagTagChoice = pick('bagTag');
     const pouchChoice = pick('pouch');
     const stickerChoice = pick('sticker');
+    const noteChoice = pick('note');
     return {
       bagTag: bagTagChoice ? clone(bagTagChoice.config) : getCurrentProductConfig('bagTag'),
       pouch: pouchChoice ? clone(pouchChoice.config) : getCurrentProductConfig('pouch'),
       sticker: stickerChoice ? clone(stickerChoice.config) : getCurrentProductConfig('sticker'),
+      note: noteChoice ? clone(noteChoice.config) : getCurrentProductConfig('note'),
       sources: {
         bagTag: bagTagChoice ? bagTagChoice.name : 'Current Working Version',
         pouch: pouchChoice ? pouchChoice.name : 'Current Working Version',
-        sticker: stickerChoice ? stickerChoice.name : 'Current Working Version'
+        sticker: stickerChoice ? stickerChoice.name : 'Current Working Version',
+        note: noteChoice ? noteChoice.name : 'Current Working Version'
       }
     };
   }
@@ -1410,19 +1607,15 @@
   function bagTagFrontSVG(s) {
     const body = COLORS[s.body], trim = COLORS[s.trim];
     const cid = 'btf' + Math.random().toString(36).slice(2,7);
-    // cy=197 halves the visible tab: r=165 meets x=120/240 (±60) at y≈43, r=153 meets x=128/232 (±52) at y≈53.
     return `
     <svg viewBox="0 0 360 375" width="280">
       <defs>
-        <clipPath id="${cid}">
+        <clipPath id="${cid}" clipPathUnits="userSpaceOnUse">
           <circle cx="180" cy="197" r="153"/>
         </clipPath>
       </defs>
-      <!-- Outer trim: tab + circle merged -->
       <path d="M120,0 L240,0 L240,43 A165,165 0 1,1 120,43 Z" fill="${trim}"/>
-      <!-- Inner body: tab + circle merged -->
       <path d="M128,8 L232,8 L232,53 A153,153 0 1,1 128,53 Z" fill="${body}"/>
-      <!-- Crest image clipped to inner circle -->
       <image href="${CREST_B64}" x="60" y="68" width="240" height="240" preserveAspectRatio="xMidYMid meet" clip-path="url(#${cid})"/>
     </svg>`;
   }
@@ -1440,9 +1633,7 @@
     ).join('');
     return `
     <svg viewBox="0 0 360 375" width="280">
-      <!-- Outer trim: tab + circle merged -->
       <path d="M120,0 L240,0 L240,43 A165,165 0 1,1 120,43 Z" fill="${trim}"/>
-      <!-- Inner body: tab + circle merged -->
       <path d="M128,8 L232,8 L232,53 A153,153 0 1,1 128,53 Z" fill="${body}"/>
       ${tspans}
     </svg>`;
@@ -1453,13 +1644,104 @@
     const txt = (s.text_content || '').toUpperCase();
     return `
     <svg viewBox="0 0 480 140" width="400">
-      <!-- strap loop -->
-      <rect x="20" y="35" width="400" height="90" rx="8"
-            fill="${strap}"/>
+      <rect x="20" y="35" width="400" height="90" rx="8" fill="${strap}"/>
       <text x="220" y="88" text-anchor="middle"
             font-family="Times New Roman" font-size="35"
             font-weight="bold" fill="${text}"
             letter-spacing="4">${escapeXml(txt)}</text>
+    </svg>`;
+  }
+
+  function bagTagAssemblySVG(frontState, slingState, width = 200) {
+    const body = COLORS[frontState.body], trim = COLORS[frontState.trim];
+    const txt = (slingState.text_content || '').toUpperCase();
+    const textSize = txt.length > 14 ? 14 : (txt.length > 10 ? 16 : 19);
+    const uid = Math.random().toString(36).slice(2,7);
+    const clipId = 'btc' + uid, gradId = 'btg' + uid, shadowId = 'bts' + uid;
+
+    // Tag shape: IDENTICAL paths to bagTagFrontSVG / bagTagBackSVG,
+    // shifted down by yOff so the strap has room above.
+    //
+    //   Original trim path: M120,0  L240,0  L240,43 A165,165 0 1,1 120,43 Z
+    //   Original body path: M128,8  L232,8  L232,53 A153,153 0 1,1 128,53 Z
+    //   Original circle centre: (180, 197)
+    //
+    // Notch rectangle is x=120..240 (width=120px).
+    // Strap = 2/3 of 120 = 80px, centred at cx=180 → x=140..220.
+    // Notch trim walls left=x120..128, right=x232..240 (8px each).
+    // Notch body walls left=x128..140, right=x220..232 (12px each).
+    //
+    // LAYER ORDER:
+    //   1. Full tag shape (trim + body + crest) — establishes the correct shape
+    //   2. Strap drawn ON TOP of the tag (so it overlaps / is "over" the border)
+    //   3. Left notch walls repainted over strap (trim + body, restores side walls)
+    //   4. Right notch walls repainted over strap
+    //   5. Text
+
+    const yOff     = 130;
+    const cx       = 180, cy = yOff + 197;   // cy = 327
+    const strapW   = 60,  strapX = cx - strapW / 2;  // strapX = 150
+    const strapTop = 12;
+    const notchTopY = yOff;          // 130 — top edge of tag / notch
+    const trimArcY  = yOff + 43;     // 173 — trim rect bottom (arc join for r=165)
+    const bodyArcY  = yOff + 53;     // 183 — body rect bottom (arc join for r=153)
+    const textMidY  = (strapTop + notchTopY) / 2;  // 71
+
+    return `
+    <svg viewBox="0 0 360 520" width="${width}" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <clipPath id="${clipId}">
+          <circle cx="${cx}" cy="${cy}" r="153"/>
+        </clipPath>
+        <linearGradient id="${gradId}" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#302b28"/>
+          <stop offset="50%"  stop-color="#1a1615"/>
+          <stop offset="100%" stop-color="#2c2825"/>
+        </linearGradient>
+        <filter id="${shadowId}" x="-15%" y="-5%" width="130%" height="115%">
+          <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity="0.25"/>
+        </filter>
+      </defs>
+
+      <!-- 1 ── Full tag shape (exact same geometry as bagTagFrontSVG, shifted ${yOff}px) -->
+      <g filter="url(#${shadowId})">
+        <path d="M120,${notchTopY} L240,${notchTopY} L240,${trimArcY} A165,165 0 1,1 120,${trimArcY} Z"
+              fill="${trim}"/>
+        <path d="M128,${notchTopY+8} L232,${notchTopY+8} L232,${bodyArcY} A153,153 0 1,1 128,${bodyArcY} Z"
+              fill="${body}"/>
+        <image href="${CREST_B64}"
+               x="60" y="${68 + yOff}"
+               width="240" height="240"
+               preserveAspectRatio="xMidYMid meet"
+               clip-path="url(#${clipId})"/>
+      </g>
+
+      <!-- 2 ── Strap: 80px wide (2/3 of 120px notch), painted ON TOP so it overlaps the border -->
+      <rect x="${strapX}"   y="${strapTop}"   width="${strapW}"   height="${trimArcY - strapTop}" rx="6" fill="url(#${gradId})"/>
+      <rect x="${strapX+4}" y="${strapTop+4}" width="${strapW-8}" height="${trimArcY - strapTop - 7}" rx="4" fill="#1b1816"/>
+
+      <!-- 3 ── Left notch walls (repainted over strap edges to restore the side walls) -->
+      <!-- left trim ring: x=120..128 -->
+      <rect x="120" y="${notchTopY}"   width="8"              height="${trimArcY - notchTopY}" fill="${trim}"/>
+      <!-- left body wall: x=128..140 -->
+      <rect x="128" y="${notchTopY+8}" width="${strapX - 128}" height="${bodyArcY - notchTopY - 8}" fill="${body}"/>
+
+      <!-- 4 ── Right notch walls -->
+      <!-- right body wall: x=220..232 -->
+      <rect x="${strapX + strapW}" y="${notchTopY+8}" width="${232 - strapX - strapW}" height="${bodyArcY - notchTopY - 8}" fill="${body}"/>
+      <!-- right trim ring: x=232..240 -->
+      <rect x="232" y="${notchTopY}" width="8" height="${trimArcY - notchTopY}" fill="${trim}"/>
+
+      <!-- 5 ── Personalised text centred in the strap above the tag.
+           Rotation pivot at (cx, textMidY) centres the text LENGTH along the strap.
+           The y baseline is shifted +0.36em below the pivot so that the visual
+           centre of uppercase character heights aligns with the strap centre width. -->
+      <text x="${cx}" y="${textMidY + textSize * 0.36}"
+            text-anchor="middle"
+            transform="rotate(90 ${cx} ${textMidY})"
+            font-family="Times New Roman, serif"
+            font-size="${textSize}" font-weight="bold"
+            fill="#ffffff" letter-spacing="1.4">${escapeXml(txt)}</text>
     </svg>`;
   }
 
@@ -1673,9 +1955,10 @@
   function renderBagTagPreview() {
     const sub = state.bagTagSubtab;
     const target = document.getElementById('bagTagPreview');
+    target.dataset.bagtagView = sub;
     document.getElementById('bagTagPreviewLabel').textContent =
       sub === 'front' ? 'FRONT' : (sub === 'back' ? 'BACK' : 'SLING / STRAP');
-    if (sub === 'front') target.innerHTML = bagTagFrontSVG(state.bagTag.front);
+    if (sub === 'front') target.innerHTML = bagTagAssemblySVG(state.bagTag.front, state.bagTag.sling, 280);
     else if (sub === 'back') {
       const backState = {...state.bagTag.back, body: state.bagTag.front.body, trim: state.bagTag.front.trim};
       target.innerHTML = bagTagBackSVG(backState);
@@ -2016,9 +2299,9 @@
     const noteHeading   = document.getElementById('noteHeading');
     const noteMessage   = document.getElementById('noteMessage');
     const noteSignatory = document.getElementById('noteSignatory');
-    if (noteHeading)   { noteHeading.value   = state.note.heading;   noteHeading.addEventListener('input',   () => { state.note.heading   = noteHeading.value;   renderNotePreview(); }); }
-    if (noteMessage)   { noteMessage.value   = state.note.message;   noteMessage.addEventListener('input',   () => { state.note.message   = noteMessage.value;   renderNotePreview(); }); }
-    if (noteSignatory) { noteSignatory.value = state.note.signatory; noteSignatory.addEventListener('input', () => { state.note.signatory = noteSignatory.value; renderNotePreview(); }); }
+    if (noteHeading)   { noteHeading.value   = state.note.heading;   noteHeading.addEventListener('input',   () => { state.note.heading   = noteHeading.value;   renderNotePreview(); renderSummary(); }); }
+    if (noteMessage)   { noteMessage.value   = state.note.message;   noteMessage.addEventListener('input',   () => { state.note.message   = noteMessage.value;   renderNotePreview(); renderSummary(); }); }
+    if (noteSignatory) { noteSignatory.value = state.note.signatory; noteSignatory.addEventListener('input', () => { state.note.signatory = noteSignatory.value; renderNotePreview(); renderSummary(); }); }
 
     // Note logo toggle
     const noteShowLogo = document.getElementById('noteShowLogo');
@@ -2030,6 +2313,7 @@
         state.note.showLogo = noteShowLogo.checked;
         noteLogoPositionGroup.style.display = noteShowLogo.checked ? 'block' : 'none';
         renderNotePreview();
+        renderSummary();
       });
     }
     document.querySelectorAll('#noteLogoBtns .shape-btn').forEach(btn => {
@@ -2042,6 +2326,7 @@
         document.querySelectorAll('#noteLogoBtns .shape-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         renderNotePreview();
+        renderSummary();
       });
     });
   }
@@ -2197,7 +2482,7 @@
 
   function clearChosenSummary(productKey) {
     if (productKey) state.chosenSummary[productKey] = null;
-    else state.chosenSummary = { bagTag: null, pouch: null, sticker: null };
+    else state.chosenSummary = { bagTag: null, pouch: null, sticker: null, note: null };
     renderCompare();
     renderSummary();
     showToast(productKey ? `${PRODUCT_LABELS[productKey]} reset to current` : 'Chosen summary reset to current working version');
@@ -2225,7 +2510,7 @@
   function renderCompare() {
     const grid = document.getElementById('compareGrid');
     if (!grid) return;
-    const productKeys = ['bagTag', 'pouch', 'sticker'];
+    const productKeys = ['bagTag', 'pouch', 'sticker', 'note'];
     grid.className = 'compare-sections';
     grid.innerHTML = productKeys.map(productKey => {
       const options = state.savedProductOptions[productKey];
@@ -2236,14 +2521,12 @@
             let previewsBlock = '';
             if (productKey === 'bagTag') {
               const c = option.config;
-              const front = bagTagFrontSVG(c.front).replace('width="280"', 'width="100%"');
-              const back = bagTagBackSVG({ ...c.back, body: c.front.body, trim: c.front.trim }).replace('width="280"', 'width="100%"');
-              const sling = bagTagSlingSVG(c.sling).replace('width="400"', 'width="100%"');
+              const front = bagTagAssemblySVG(c.front, c.sling).replace(/width="[\d]+"/, 'width="100%"');
+              const back  = bagTagBackSVG({ ...c.back, body: c.front.body, trim: c.front.trim }).replace('width="280"', 'width="100%"');
               previewsBlock = `
-                <div class="compare-previews cols-3">
+                <div class="compare-previews cols-2">
                   <div class="compare-mini"><div class="compare-mini-label">FRONT</div>${front}</div>
                   <div class="compare-mini"><div class="compare-mini-label">BACK</div>${back}</div>
-                  <div class="compare-mini compare-mini-sling"><div class="compare-mini-label">SLING</div>${sling}</div>
                 </div>`;
             } else if (productKey === 'pouch') {
               const c = option.config;
@@ -2254,11 +2537,17 @@
                   <div class="compare-mini"><div class="compare-mini-label">FRONT</div>${front}</div>
                   <div class="compare-mini"><div class="compare-mini-label">BACK</div>${back}</div>
                 </div>`;
-            } else {
+            } else if (productKey === 'sticker') {
               const sticker = stickerSVG(option.config).replace('width="300"', 'width="100%"');
               previewsBlock = `
                 <div class="compare-previews cols-1">
                   <div class="compare-mini"><div class="compare-mini-label">STICKER</div>${sticker}</div>
+                </div>`;
+            } else {
+              const note = noteSVG(option.config);
+              previewsBlock = `
+                <div class="compare-previews cols-1">
+                  <div class="compare-mini"><div class="compare-mini-label">NOTE</div>${note}</div>
                 </div>`;
             }
             return `
@@ -2270,10 +2559,10 @@
                   </div>
                   ${option.arborPick ? '' : `<button type="button" class="btn btn-danger" onclick="deleteSavedProductOption('${productKey}','${option.id}')">REMOVE</button>`}
                 </div>
-                <div class="compare-status">${chosen ? 'Currently used in the summary' : 'Available to use in the summary'}</div>
+                <div class="compare-status">${chosen ? 'Currently used in the proposal' : 'Available to use in the proposal'}</div>
                 ${previewsBlock}
                 <div class="compare-actions" style="margin-top:0.8rem;">
-                  <button type="button" class="btn" onclick="chooseSummaryProduct('${productKey}','${option.id}')">USE IN SUMMARY</button>
+                  <button type="button" class="btn" onclick="chooseSummaryProduct('${productKey}','${option.id}')">USE IN PROPOSAL</button>
                 </div>
               </div>
             `;
@@ -2283,7 +2572,6 @@
         <div class="compare-section">
           <div class="compare-section-header">
             <h3>${escapeXml(PRODUCT_LABELS[productKey])}</h3>
-            <button type="button" class="btn btn-outline" onclick="clearChosenSummary('${productKey}')">USE CURRENT WORKING VERSION</button>
           </div>
           ${cards}
         </div>
@@ -2291,90 +2579,28 @@
     }).join('');
   }
 
-  // ============ SUMMARY ============
-  function renderSummary() {
-    const grid = document.getElementById('summaryGrid');
-    if (!grid) return;
+  function renderIncludedPreviews() {
     const summary = getSummarySelection();
-    const bt = summary.bagTag, p = summary.pouch, st = summary.sticker;
-    const sources = summary.sources;
-    const pouchPrintNames = {crestText:'Crest & Club Name',crest:'Crest Only',text:'Text Only',none:'Plain'};
-    const frontText = getPouchDisplayText(p.front);
-    const backText = getPouchDisplayText(p.back);
-    grid.innerHTML = `
-      <div class="summary-card">
-        <h3>Bag Tag</h3>
-        <div class="summary-source">Using: ${escapeXml(sources.bagTag)}</div>
-        <!-- Front + Back side by side -->
-        <div style="display:flex;gap:6px;justify-content:center;align-items:flex-end;background:#faf6e9;border-radius:4px;padding:8px 4px 4px;margin-bottom:6px;">
-          <div style="text-align:center;flex:1;">
-            <div style="font-size:0.55rem;letter-spacing:0.2em;color:var(--c-muted);margin-bottom:3px;">FRONT</div>
-            ${bagTagFrontSVG(bt.front).replace('width="280"','width="100%"')}
-          </div>
-          <div style="text-align:center;flex:1;">
-            <div style="font-size:0.55rem;letter-spacing:0.2em;color:var(--c-muted);margin-bottom:3px;">BACK</div>
-            ${bagTagBackSVG({...bt.back, body: bt.front.body, trim: bt.front.trim}).replace('width="280"','width="100%"')}
-          </div>
-        </div>
-        <!-- Sling full width -->
-        <div style="background:#faf6e9;border-radius:4px;padding:6px 4px;margin-bottom:0.8rem;">
-          <div style="font-size:0.55rem;letter-spacing:0.2em;color:var(--c-muted);margin-bottom:3px;text-align:center;">SLING</div>
-          ${bagTagSlingSVG(bt.sling).replace('width="400"','width="100%"')}
-        </div>
-        <dl>
-          <dt>FRONT</dt>
-          <dd>Body: ${COLOR_NAMES[bt.front.body]} · Trim: ${COLOR_NAMES[bt.front.trim]}</dd>
-          <dt>BACK</dt>
-          <dd>Body &amp; Trim: matches front · Text: ${COLOR_NAMES[bt.back.text]}</dd>
-          <dd style="white-space:pre-line; font-style:italic; margin-top:4px;">"${bt.back.text_content}"</dd>
-          <dt>SLING</dt>
-          <dd>Black strap · White text</dd>
-          <dd style="font-style:italic;">"${bt.sling.text_content}"</dd>
-        </dl>
-      </div>
-      <div class="summary-card">
-        <h3>Valuables Pouch</h3>
-        <div class="summary-source">Using: ${escapeXml(sources.pouch)}</div>
-        <div style="display:flex;gap:6px;justify-content:center;align-items:flex-start;background:#faf6e9;border-radius:4px;padding:8px 4px 4px;margin-bottom:0.8rem;">
-          <div style="text-align:center;flex:1;">
-            <div style="font-size:0.55rem;letter-spacing:0.2em;color:var(--c-muted);margin-bottom:3px;">FRONT</div>
-            ${pouchSVG(p, 'front').replace('width="320"','width="100%"')}
-          </div>
-          <div style="text-align:center;flex:1;">
-            <div style="font-size:0.55rem;letter-spacing:0.2em;color:var(--c-muted);margin-bottom:3px;">BACK</div>
-            ${pouchSVG(p, 'back').replace('width="320"','width="100%"')}
-          </div>
-        </div>
-        <dl>
-          <dt>POUCH</dt><dd>Fabric: ${COLOR_NAMES[p.body]} · Drawstring: ${COLOR_NAMES[p.cord]}</dd>
-          <dt>LABEL</dt><dd>${p.labelText ? `${p.labelText} · ${COLOR_NAMES[p.labelColor]}` : 'None'}</dd>
-          <dt>FRONT</dt><dd>${pouchPrintNames[p.front.print]}${p.front.print==='text'||p.front.print==='crestText' ? ` · ${COLOR_NAMES[p.front.textColor]}` : ''}</dd>
-          ${(p.front.print==='text'||p.front.print==='crestText') ? `<dd style="font-style:italic;">"${frontText.secondary ? `${frontText.primary} ${frontText.secondary}` : frontText.primary}"</dd>` : ''}
-          <dt>BACK</dt><dd>${pouchPrintNames[p.back.print]}${p.back.print==='text'||p.back.print==='crestText' ? ` · ${COLOR_NAMES[p.back.textColor]}` : ''}</dd>
-          ${(p.back.print==='text'||p.back.print==='crestText') ? `<dd style="font-style:italic;">"${backText.secondary ? `${backText.primary} ${backText.secondary}` : backText.primary}"</dd>` : ''}
-        </dl>
-      </div>
-      <div class="summary-card">
-        <h3>Sticker</h3>
-        <div class="summary-source">Using: ${escapeXml(sources.sticker)}</div>
-        <div class="mini-preview">${stickerSVG(st).replace('width="300"','width="160"')}</div>
-        <dl>
-          <dt>BODY</dt><dd>${COLOR_NAMES[st.body]}</dd>
-          <dt>BORDER</dt><dd>${COLOR_NAMES[st.border]}</dd>
-        </dl>
-      </div>
-    `;
+    const bt = summary.bagTag, p = summary.pouch, st = summary.sticker, n = summary.note;
+    const bag = document.getElementById('includedBagTagPreview');
+    const pouch = document.getElementById('includedPouchPreview');
+    const sticker = document.getElementById('includedStickerPreview');
+    const note = document.getElementById('includedNotePreview');
+    if (bag) bag.innerHTML = bagTagAssemblySVG(bt.front, bt.sling, 72);
+    if (pouch) pouch.innerHTML = pouchSVG(p, 'front').replace('width="320"', 'width="110"');
+    if (sticker) sticker.innerHTML = stickerSVG(st).replace('width="300"', 'width="104"');
+    if (note) note.innerHTML = noteSVG(n).replace('width="100%"', 'width="108"');
   }
 
-  function copySummary() {
+  function buildSummaryText() {
     const summary = getSummarySelection();
-    const bt = summary.bagTag, p = summary.pouch, st = summary.sticker;
+    const bt = summary.bagTag, p = summary.pouch, st = summary.sticker, n = summary.note;
     const sources = summary.sources;
     const pouchPrintNames = {crestText:'Crest & Club Name',crest:'Crest Only',text:'Text Only',none:'Plain'};
     const frontText = getPouchDisplayText(p.front);
     const backText = getPouchDisplayText(p.back);
-    const txt = `HUNSTANTON GOLF CLUB — Custom Accessory Selection
-=================================================
+    return `HUNSTANTON GOLF CLUB — Visitor Kit Proposal
+============================================
 
 BAG TAG
   Source: ${sources.bagTag}
@@ -2393,12 +2619,105 @@ VALUABLES POUCH
 
 STICKER
   Source: ${sources.sticker}
-  Body ${COLOR_NAMES[st.body]} | Border ${COLOR_NAMES[st.border]}
-`;
+  Shape ${st.shape} | Body ${COLOR_NAMES[st.body]} | Border ${COLOR_NAMES[st.border]}
+
+THANK YOU NOTE
+  Source: ${sources.note}
+  Heading: "${n.heading}"
+  Signatory: "${n.signatory}"
+  Border: ${COLOR_NAMES[n.border]} | Crest: ${n.showLogo ? `Shown (${n.logoPosition})` : 'Not shown'}
+
+Prepared by Arbor Golf`;
+  }
+
+  // ============ SUMMARY ============
+  function renderSummary() {
+    const grid = document.getElementById('summaryGrid');
+    if (!grid) return;
+    const summary = getSummarySelection();
+    const bt = summary.bagTag, p = summary.pouch, st = summary.sticker, n = summary.note;
+    const sources = summary.sources;
+    const pouchPrintNames = {crestText:'Crest & Club Name',crest:'Crest Only',text:'Text Only',none:'Plain'};
+    const frontText = getPouchDisplayText(p.front);
+    const backText = getPouchDisplayText(p.back);
+    grid.innerHTML = `
+      <div class="summary-card">
+        <h3>Bag Tag</h3>
+        <div class="summary-source">Using: ${escapeXml(sources.bagTag)}</div>
+        <div style="display:flex;gap:6px;justify-content:center;align-items:flex-end;background:#faf6e9;border-radius:4px;padding:8px 4px 4px;margin-bottom:6px;">
+          <div style="text-align:center;flex:1;">
+            <div style="font-size:0.55rem;letter-spacing:0.2em;color:var(--c-muted);margin-bottom:3px;">FRONT</div>
+            ${bagTagAssemblySVG(bt.front, bt.sling).replace(/width="[\d]+"/, 'width="100%"')}
+          </div>
+          <div style="text-align:center;flex:1;">
+            <div style="font-size:0.55rem;letter-spacing:0.2em;color:var(--c-muted);margin-bottom:3px;">BACK</div>
+            ${bagTagBackSVG({...bt.back, body: bt.front.body, trim: bt.front.trim}).replace('width="280"','width="100%"')}
+          </div>
+        </div>
+        <dl>
+          <dt>FRONT</dt>
+          <dd>Body: ${COLOR_NAMES[bt.front.body]} · Trim: ${COLOR_NAMES[bt.front.trim]}</dd>
+          <dt>BACK</dt>
+          <dd>Body &amp; Trim: matches front · Text: ${COLOR_NAMES[bt.back.text]}</dd>
+          <dd style="white-space:pre-line; font-style:italic; margin-top:4px;">"${escapeXml(bt.back.text_content)}"</dd>
+          <dt>SLING</dt>
+          <dd>Black strap · White text</dd>
+          <dd style="font-style:italic;">"${escapeXml(bt.sling.text_content)}"</dd>
+        </dl>
+      </div>
+      <div class="summary-card">
+        <h3>Valuables Pouch</h3>
+        <div class="summary-source">Using: ${escapeXml(sources.pouch)}</div>
+        <div style="display:flex;gap:6px;justify-content:center;align-items:flex-start;background:#faf6e9;border-radius:4px;padding:8px 4px 4px;margin-bottom:0.8rem;">
+          <div style="text-align:center;flex:1;">
+            <div style="font-size:0.55rem;letter-spacing:0.2em;color:var(--c-muted);margin-bottom:3px;">FRONT</div>
+            ${pouchSVG(p, 'front').replace('width="320"','width="100%"')}
+          </div>
+          <div style="text-align:center;flex:1;">
+            <div style="font-size:0.55rem;letter-spacing:0.2em;color:var(--c-muted);margin-bottom:3px;">BACK</div>
+            ${pouchSVG(p, 'back').replace('width="320"','width="100%"')}
+          </div>
+        </div>
+        <dl>
+          <dt>Pouch</dt><dd>Fabric: ${COLOR_NAMES[p.body]} · Drawstring: ${COLOR_NAMES[p.cord]}</dd>
+          <dt>Label</dt><dd>${p.labelText ? `${escapeXml(p.labelText)} · ${COLOR_NAMES[p.labelColor]}` : 'None'}</dd>
+          <dt>Front</dt><dd>${pouchPrintNames[p.front.print]}${p.front.print==='text'||p.front.print==='crestText' ? ` · ${COLOR_NAMES[p.front.textColor]}` : ''}</dd>
+          ${(p.front.print==='text'||p.front.print==='crestText') ? `<dd style="font-style:italic;">"${escapeXml(frontText.secondary ? `${frontText.primary} ${frontText.secondary}` : frontText.primary)}"</dd>` : ''}
+          <dt>Back</dt><dd>${pouchPrintNames[p.back.print]}${p.back.print==='text'||p.back.print==='crestText' ? ` · ${COLOR_NAMES[p.back.textColor]}` : ''}</dd>
+          ${(p.back.print==='text'||p.back.print==='crestText') ? `<dd style="font-style:italic;">"${escapeXml(backText.secondary ? `${backText.primary} ${backText.secondary}` : backText.primary)}"</dd>` : ''}
+        </dl>
+      </div>
+      <div class="summary-card">
+        <h3>Sticker</h3>
+        <div class="summary-source">Using: ${escapeXml(sources.sticker)}</div>
+        <div class="mini-preview">${stickerSVG(st).replace('width="300"','width="160"')}</div>
+        <dl>
+          <dt>Shape</dt><dd>${st.shape.charAt(0).toUpperCase() + st.shape.slice(1)}</dd>
+          <dt>Body</dt><dd>${COLOR_NAMES[st.body]}</dd>
+          <dt>Border</dt><dd>${COLOR_NAMES[st.border]}</dd>
+        </dl>
+      </div>
+      <div class="summary-card">
+        <h3>Thank You Note</h3>
+        <div class="summary-source">Using: ${escapeXml(sources.note)}</div>
+        <div class="mini-preview">${noteSVG(n).replace('width="100%"','width="160"')}</div>
+        <dl>
+          <dt>Heading</dt><dd>${escapeXml(n.heading)}</dd>
+          <dt>Signatory</dt><dd>${escapeXml(n.signatory)}</dd>
+          <dt>Border</dt><dd>${COLOR_NAMES[n.border]}</dd>
+          <dt>Crest</dt><dd>${n.showLogo ? `Shown · ${n.logoPosition === 'top' ? 'Top' : 'Bottom'}` : 'Not shown'}</dd>
+        </dl>
+      </div>
+    `;
+    renderIncludedPreviews();
+    renderKitPreview();
+  }
+
+  function copySummary() {
+    const txt = buildSummaryText();
     navigator.clipboard.writeText(txt).then(() => {
       showToast('Summary copied to clipboard');
     }).catch(() => {
-      // fallback
       const ta = document.createElement('textarea');
       ta.value = txt; document.body.appendChild(ta);
       ta.select(); document.execCommand('copy');
@@ -2415,111 +2734,9 @@ STICKER
     showToast._t = setTimeout(() => t.classList.remove('show'), 2500);
   }
 
-  function getConfigurationExportObject() {
-    return {
-      arborConfigurator: CONFIG_EXPORT_VERSION,
-      bagTag: clone(state.bagTag),
-      pouch: clone(state.pouch),
-      sticker: clone(state.sticker),
-      bagTagSubtab: state.bagTagSubtab,
-      pouchSide: state.pouchSide,
-      savedProductOptions: clone(state.savedProductOptions),
-      chosenSummary: clone(state.chosenSummary)
-    };
-  }
-
-  function exportConfiguration() {
-    const json = JSON.stringify(getConfigurationExportObject(), null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'hunstanton-accessory-config.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    showToast('Configuration file downloaded');
-  }
-
-  function copyConfigurationJson() {
-    const json = JSON.stringify(getConfigurationExportObject());
-    navigator.clipboard.writeText(json).then(() => {
-      showToast('Configuration copied to clipboard');
-    }).catch(() => {
-      const ta = document.createElement('textarea');
-      ta.value = json;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      showToast('Configuration copied to clipboard');
-    });
-  }
-
-  function validateImportedConfig(obj) {
-    if (!obj || typeof obj !== 'object') return false;
-    if (obj.arborConfigurator != null && String(obj.arborConfigurator) !== CONFIG_EXPORT_VERSION) return false;
-    if (!obj.bagTag || !obj.pouch || !obj.sticker) return false;
-    if (!obj.bagTag.front || !obj.bagTag.back || !obj.bagTag.sling) return false;
-    if (!obj.pouch.front || !obj.pouch.back) return false;
-    if (typeof obj.sticker.body !== 'string' || typeof obj.sticker.border !== 'string') return false;
-    return true;
-  }
-
-  function applyImportedConfiguration(obj) {
-    if (!validateImportedConfig(obj)) throw new Error('Invalid configuration');
-    state.bagTag = clone(obj.bagTag);
-    state.pouch = clone(obj.pouch);
-    state.sticker = clone(obj.sticker);
-    state.bagTagSubtab = ['front', 'back', 'sling'].includes(obj.bagTagSubtab) ? obj.bagTagSubtab : 'front';
-    state.pouchSide = ['front', 'back'].includes(obj.pouchSide) ? obj.pouchSide : 'front';
-    const emptySaved = { bagTag: [], pouch: [], sticker: [] };
-    const rawSaved = obj.savedProductOptions && typeof obj.savedProductOptions === 'object' ? obj.savedProductOptions : {};
-    state.savedProductOptions = {
-      bagTag: Array.isArray(rawSaved.bagTag) ? rawSaved.bagTag.filter(o => o && o.id && o.name && o.config) : [],
-      pouch: Array.isArray(rawSaved.pouch) ? rawSaved.pouch.filter(o => o && o.id && o.name && o.config) : [],
-      sticker: Array.isArray(rawSaved.sticker) ? rawSaved.sticker.filter(o => o && o.id && o.name && o.config) : []
-    };
-    const ch = obj.chosenSummary && typeof obj.chosenSummary === 'object' ? obj.chosenSummary : {};
-    const normChosen = v => (typeof v === 'string' && v ? v : null);
-    state.chosenSummary = {
-      bagTag: normChosen(ch.bagTag),
-      pouch: normChosen(ch.pouch),
-      sticker: normChosen(ch.sticker)
-    };
-    ['bagTag', 'pouch', 'sticker'].forEach(k => {
-      const id = state.chosenSummary[k];
-      if (id && !state.savedProductOptions[k].some(o => o.id === id)) state.chosenSummary[k] = null;
-    });
-    syncFormFromState();
-    syncSubtabUIFromState();
-    buildSwatches();
-    renderAllPreviews();
-    renderCompare();
-    renderSummary();
-  }
-
-  function setupConfigImportFile() {
-    const input = document.getElementById('configImportFile');
-    if (!input) return;
-    input.addEventListener('change', () => {
-      const file = input.files && input.files[0];
-      input.value = '';
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        try {
-          const data = JSON.parse(reader.result);
-          applyImportedConfiguration(data);
-          showToast('Configuration imported');
-        } catch (e) {
-          showToast('Could not import that file');
-        }
-      };
-      reader.onerror = () => showToast('Could not read file');
-      reader.readAsText(file);
-    });
+  function printProposal() {
+    showMainTab('summary');
+    window.setTimeout(() => window.print(), 60);
   }
 
   // ============ KIT PREVIEW ============
@@ -2527,23 +2744,29 @@ STICKER
     const scene = document.getElementById('kitScene');
     if (!scene) return;
     const summary = getSummarySelection();
-    const bt = summary.bagTag, p = summary.pouch, st = summary.sticker, n = state.note;
+    const bt = summary.bagTag, p = summary.pouch, st = summary.sticker, n = summary.note;
     scene.innerHTML = `
-      <div class="kit-item kit-item-pouch">
-        <div class="kit-item-label">Valuables Pouch</div>
-        ${pouchSVG(p,'front').replace(/width="[\d]+"/,'width="185"')}
+      <div class="kit-bag-board">
+        <div class="kit-bag-board-kicker">Assembled Bag Tag</div>
+        <div class="kit-bag-title">Visitor Bag Tag</div>
+        <div class="kit-bag-copy">The crest tag and personalised sling shown as one assembled piece, hanging the way the finished product should read.</div>
+        <div class="kit-golf-bag">
+          <div class="kit-hanging-tag">${bagTagAssemblySVG(bt.front, bt.sling, 235)}</div>
+        </div>
       </div>
-      <div class="kit-item kit-item-tag">
-        <div class="kit-item-label">Bag Tag</div>
-        ${bagTagFrontSVG(bt.front).replace(/width="[\d]+"/,'width="150"')}
-      </div>
-      <div class="kit-item kit-item-sticker">
-        <div class="kit-item-label">Sticker</div>
-        ${stickerSVG(st).replace(/width="[\d]+"/,'width="130"')}
-      </div>
-      <div class="kit-item kit-item-note">
-        <div class="kit-item-label">Thank You Note</div>
-        ${noteSVG(n).replace('width="100%"','width="140"')}
+      <div class="kit-accessory-stack">
+        <div class="kit-accessory-card">
+          <div class="kit-item-label">Valuables Pouch</div>
+          ${pouchSVG(p,'front').replace(/width="[\d]+"/,'width="185"')}
+        </div>
+        <div class="kit-accessory-card">
+          <div class="kit-item-label">Sticker</div>
+          ${stickerSVG(st).replace(/width="[\d]+"/,'width="130"')}
+        </div>
+        <div class="kit-accessory-card is-note">
+          <div class="kit-item-label">Thank You Note</div>
+          ${noteSVG(n).replace('width="100%"','width="155"')}
+        </div>
       </div>`;
   }
 
@@ -2552,10 +2775,10 @@ STICKER
     const container = document.getElementById('lookCardsContainer');
     if (!container) return;
     container.innerHTML = Object.entries(ARBOR_LOOKS).map(([key, look]) => {
-      // Two representative swatch colours per look
       const s1 = COLORS[look.bagTag.front.body];
       const s2 = COLORS[look.bagTag.front.trim];
       const s3 = COLORS[look.pouch.cord];
+      const s4 = COLORS[look.note.border];
       return `
         <div class="look-card">
           <h4>${look.name}</h4>
@@ -2564,6 +2787,7 @@ STICKER
             <div class="look-swatch" style="background:${s1}" title="${look.bagTag.front.body}"></div>
             <div class="look-swatch" style="background:${s2}" title="${look.bagTag.front.trim}"></div>
             <div class="look-swatch" style="background:${s3}" title="${look.pouch.cord}"></div>
+            <div class="look-swatch" style="background:${s4}" title="${look.note.border}"></div>
           </div>
           <button type="button" class="btn" onclick="applyLook('${key}')">USE THIS LOOK</button>
         </div>`;
@@ -2576,6 +2800,7 @@ STICKER
     state.bagTag  = clone(look.bagTag);
     state.pouch   = clone(look.pouch);
     state.sticker = clone(look.sticker);
+    state.note    = clone(look.note);
     syncFormFromState();
     syncSubtabUIFromState();
     buildSwatches();
@@ -2587,38 +2812,8 @@ STICKER
 
   // ============ SEND TO ARBOR GOLF ============
   function sendSelectionsEmail() {
-    const summary = getSummarySelection();
-    const bt = summary.bagTag, p = summary.pouch, st = summary.sticker;
-    const sources = summary.sources;
-    const pouchPrintNames = {crestText:'Crest & Club Name',crest:'Crest Only',text:'Text Only',none:'Plain'};
-    const frontText = getPouchDisplayText(p.front);
-    const backText  = getPouchDisplayText(p.back);
-    const body =
-`HUNSTANTON GOLF CLUB — Custom Accessory Selections
-===================================================
-
-BAG TAG (${sources.bagTag})
-  Front:  Body ${COLOR_NAMES[bt.front.body]} | Trim ${COLOR_NAMES[bt.front.trim]}
-  Back:   Text colour ${COLOR_NAMES[bt.back.text]} | "${bt.back.text_content}"
-  Sling:  "${bt.sling.text_content}"
-
-VALUABLES POUCH (${sources.pouch})
-  Body ${COLOR_NAMES[p.body]} | Cord ${COLOR_NAMES[p.cord]} | Label: ${p.labelText||'None'}
-  Front: ${pouchPrintNames[p.front.print]}
-  Back:  ${pouchPrintNames[p.back.print]}
-
-STICKER (${sources.sticker})
-  Shape ${st.shape} | Body ${COLOR_NAMES[st.body]} | Border ${COLOR_NAMES[st.border]}
-
-THANK YOU NOTE
-  Heading: "${state.note.heading}"
-  Signatory: "${state.note.signatory}"
-  Border colour: ${COLOR_NAMES[state.note.border]}
-
----
-Sent via the Hunstanton Golf Club Visitor Kit Configurator`;
-
-    const subject = encodeURIComponent('Hunstanton Golf Club — Visitor Kit Selections');
+    const body = `${buildSummaryText()}\n\nPlease review and reply with any preferred direction, edits, or questions.\n\nPrepared in the Arbor Golf Hunstanton configurator.`;
+    const subject = encodeURIComponent('Hunstanton Golf Club — Visitor Kit Review');
     const bodyEnc = encodeURIComponent(body);
     window.location.href = `mailto:hello@arborgolf.com?subject=${subject}&body=${bodyEnc}`;
   }
@@ -2627,7 +2822,6 @@ Sent via the Hunstanton Golf Club Visitor Kit Configurator`;
   buildSwatches();
   setupTabs();
   setupInputs();
-  setupConfigImportFile();
   initArborPicks();
   renderLookCards();
   renderAllPreviews();
