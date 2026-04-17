@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golf Config Form</title>
+</head>
+<body>
+<form name="golf-config" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/golf-config-success.html">
+  <input type="hidden" name="form-name" value="golf-config" />
+  <p hidden>
+    <label>Do not fill this out: <input type="text" name="bot-field" /></label>
+  </p>
+  <p>
+    <label>Club
+      <input type="text" name="club" />
+    </label>
+  </p>
+  <p>
+    <label>Summary
+      <textarea name="summary"></textarea>
+    </label>
+  </p>
+  <p>
+    <label>Configuration JSON
+      <textarea name="config_json"></textarea>
+    </label>
+  </p>
+  <p>
+    <button type="submit">Submit</button>
+  </p>
+</form>
+</body>
+</html>
